@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MOON-XMD MINI | PAIR CODE</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+
+  <style>
+    :root {
+      --deep-space: #0a0e27;
+      --midnight: #141b3d;
+      --moon-glow: #e8f1ff;
+      --accent-blue: #4a90e2;
+      --bright-blue: #64b5f6;
+      --star-white: #ffffff;
+      --glass-bg: rgba(20, 27, 61, 0.6);
+      --glass-border: rgba(100, 181, 246, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #0a0e27 0%, #1a1f3a 50%, #0f1428 100%);
+      color: var(--star-white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #night-sky {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .moon {
+      position: fixed;
+      top: 80px;
+      right: 10%;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle at 30% 30%, #fff, #e8f1ff);
+      border-radius: 50%;
+      box-shadow: 0 0 60px rgba(232, 241, 255, 0.6),
+                  0 0 100px rgba(100, 181, 246, 0.4),
+                  inset -10px -10px 20px rgba(0, 0, 0, 0.1);
+      z-index: 2;
+      animation: moonFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes moonFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .moon-crater {
+      position: absolute;
+      background: rgba(200, 200, 200, 0.3);
+      border-radius: 50%;
+    }
+
+    .crater1 { width: 20px; height: 20px; top: 30%; left: 25%; }
+    .crater2 { width: 15px; height: 15px; top: 50%; left: 60%; }
+    .crater3 { width: 12px; height: 12px; top: 65%; left: 35%; }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 1.2rem 2rem;
+      z-index: 1000;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--star-white);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      text-shadow: 0 0 20px rgba(100, 181, 246, 0.8);
+    }
+
+    .logo i {
+      color: var(--bright-blue);
+      animation: rotate 4s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 140px 20px 40px;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      text-align: center;
+      background: linear-gradient(135deg, #64b5f6, #e8f1ff, #4a90e2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 40px rgba(100, 181, 246, 0.5);
+      animation: titleGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes titleGlow {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--moon-glow);
+      margin-bottom: 3rem;
+      opacity: 0.9;
+    }
+
+    .pair-card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(25px);
+      border: 2px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                  0 0 60px rgba(100, 181, 246, 0.15);
+      animation: cardFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .card-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      text-align: center;
+      color: var(--bright-blue);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 15px rgba(100, 181, 246, 0.6);
+    }
+
+    .card-description {
+      text-align: center;
+      color: var(--moon-glow);
+      margin-bottom: 2rem;
+      opacity: 0.85;
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--bright-blue);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--bright-blue);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      background: rgba(10, 14, 39, 0.5);
+      border: 2px solid var(--glass-border);
+      border-radius: 12px;
+      color: var(--star-white);
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--bright-blue);
+      box-shadow: 0 0 20px rgba(100, 181, 246, 0.3);
+      background: rgba(10, 14, 39, 0.7);
+    }
+
+    input[type="text"]::placeholder {
+      color: rgba(232, 241, 255, 0.4);
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn {
+      padding: 1rem;
+      background: linear-gradient(135deg, #4a90e2, #64b5f6);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(74, 144, 226, 0.6);
+    }
+
+    .btn:active {
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .whatsapp-btn {
+      margin-top: 2rem;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      text-decoration: none;
+      padding: 1rem;
+      border-radius: 12px;
+      color: white;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    }
+
+    .whatsapp-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+    }
+
+    .whatsapp-btn i {
+      font-size: 1.3rem;
+    }
+
+    .loading-container {
+      display: none;
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .loader {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+
+    .loader div {
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--bright-blue);
+      animation: loader 1.2s linear infinite;
+    }
+
+    .loader div:nth-child(1) { animation-delay: 0s; top: 37px; left: 66px; }
+    .loader div:nth-child(2) { animation-delay: -0.1s; top: 22px; left: 62px; }
+    .loader div:nth-child(3) { animation-delay: -0.2s; top: 11px; left: 52px; }
+    .loader div:nth-child(4) { animation-delay: -0.3s; top: 7px; left: 37px; }
+    .loader div:nth-child(5) { animation-delay: -0.4s; top: 11px; left: 22px; }
+    .loader div:nth-child(6) { animation-delay: -0.5s; top: 22px; left: 11px; }
+    .loader div:nth-child(7) { animation-delay: -0.6s; top: 37px; left: 7px; }
+    .loader div:nth-child(8) { animation-delay: -0.7s; top: 52px; left: 11px; }
+
+    @keyframes loader {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .loading-text {
+      margin-top: 1rem;
+      color: var(--bright-blue);
+      font-weight: 600;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    #pair {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: rgba(74, 144, 226, 0.1);
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      word-wrap: break-word;
+    }
+
+    #pair strong {
+      color: var(--bright-blue);
+      font-size: 1.2rem;
+      font-family: 'Orbitron', monospace;
+    }
+
+    #pair a {
+      color: var(--bright-blue);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    #pair a:hover {
+      color: var(--star-white);
+      text-shadow: 0 0 10px var(--bright-blue);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--moon-glow);
+      opacity: 0.8;
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    footer span {
+      color: var(--bright-blue);
+      font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2.5rem; }
+      .moon { width: 80px; height: 80px; right: 5%; top: 70px; }
+      .pair-card { padding: 2rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="night-sky"></div>
+  
+  <div class="moon">
+    <div class="moon-crater crater1"></div>
+    <div class="moon-crater crater2"></div>
+    <div class="moon-crater crater3"></div>
+  </div>
+
+  <header class="navbar">
+    <a href="#" class="logo">
+      <i class="fas fa-moon"></i>
+      MOON XMD MINI
+    </a>
+  </header>
+
+  <div class="container">
+    <h1 class="hero-title">MOON XMD MINI</h1>
+    <p class="subtitle">✨ Connect with the stars ✨</p>
+
+    <div class="pair-card">
+      <h2 class="card-title">GET PAIR CODE</h2>
+      <p class="card-description">Enter your WhatsApp number with country code to receive your pairing code</p>
+
+      <div class="form-group">
+        <label for="phone-number">
+          <i class="fas fa-phone"></i> Phone Number
+        </label>
+        <div class="input-wrapper">
+          <i class="fas fa-mobile-alt"></i>
+          <input type="text" id="phone-number" placeholder="e.g., +26378xxx">
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button class="btn" id="generate-code">
+          <i class="fas fa-rocket"></i> Generate Code & Link
+        </button>
+        <button class="btn" id="copy-code" style="display:none;">
+          <i class="fas fa-copy"></i> Copy Code
+        </button>
+        <button class="btn" id="validate-code" style="display:none;">
+          <i class="fas fa-check-circle"></i> Validate Session
+        </button>
+      </div>
+
+      <a href="https://whatsapp.com/channel/0029VbANWX1DuMRi1VNPlB0y" target="_blank" class="whatsapp-btn">
+        <i class="fab fa-whatsapp"></i>
+        Join WhatsApp Channel
+      </a>
+
+      <div class="loading-container" id="loading-spinner">
+        <div class="loader">
+          <div></div><div></div><div></div><div></div>
+          <div></div><div></div><div></div><div></div>
+        </div>
+        <p class="loading-text">Connecting to the moon...</p>
+      </div>
+
+      <div id="pair"></div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; <span id="currentYear"></span> MOON XMD MINI. Powered by <span>Keith Tech</span>
+  </footer>
+
+  <script>
+    // Create starry night sky
+    function createStars() {
+      const sky = document.getElementById('night-sky');
+      for (let i = 0; i < 150; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.width = Math.random() * 3 + 'px';
+        star.style.height = star.style.width;
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        sky.appendChild(star);
+      }
+    }
+    createStars();
+
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    
+    document.addEventListener("DOMContentLoaded", () => {
+      swal({
+        title: "Welcome to Moon XMD! 🌙",
+        text: "Connect to Moon Xmd instantly!",
+        icon: "info",
+        button: "Let's Go!",
+      });
+    });
+
+    const genBtn = document.getElementById('generate-code');
+    const valBtn = document.getElementById('validate-code');
+    const copyBtn = document.getElementById('copy-code');
+    const spinner = document.getElementById('loading-spinner');
+    const pairDiv = document.getElementById('pair');
+    const phoneInput = document.getElementById('phone-number');
+
+    async function copyToClipboard() {
+      const code = copyBtn.dataset.code;
+      try {
+        await navigator.clipboard.writeText(code);
+        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        setTimeout(() => {
+          copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Code';
+        }, 2000);
+      } catch (err) {
+        console.error('Copy failed:', err);
+      }
+    }
+
+    genBtn.addEventListener('click', async () => {
+      const num = phoneInput.value.replace(/\D/g, '');
+      if (!num) {
+        pairDiv.innerHTML = '<p style="color: #ff6b6b;">❗ Please enter your WhatsApp number with country code.</p>';
+        return;
+      }
+      
+      spinner.style.display = 'block';
+      pairDiv.innerHTML = '';
+      valBtn.style.display = 'none';
+      copyBtn.style.display = 'none';
+      genBtn.disabled = true;
+      
+      try {
+        phoneInput.value = '+' + num;
+        await new Promise(r => setTimeout(r, 2000));
+        
+        const {data} = await axios.get(`/code?number=${num}`);
+        const code = data.code || '❗ Service Unavailable';
+        const waLink = `https://wa.me/${num}?text=${encodeURIComponent(code)}`;
+        
+        pairDiv.innerHTML = `
+          <p style="margin-bottom: 1rem;">Your Pairing Code:</p>
+          <p><strong>${code}</strong></p>
+          <p style="margin-top: 1rem;">
+            <a href="${waLink}" target="_blank">
+              <i class="fas fa-external-link-alt"></i> Open in WhatsApp
+            </a>
+          </p>
+        `;
+        
+        copyBtn.dataset.code = code;
+        copyBtn.style.display = 'block';
+        valBtn.style.display = 'block';
+      } catch (err) {
+        pairDiv.innerHTML = '<p style="color: #ff6b6b;">❗ Error generating code. Please try again later.</p>';
+      } finally {
+        spinner.style.display = 'none';
+        genBtn.disabled = false;
+      }
+    });
+
+    copyBtn.addEventListener('click', copyToClipboard);
+    valBtn.addEventListener('click', () => window.location.href = '/validate');
+    
+    phoneInput.addEventListener('input', function() {
+      let v = this.value.replace(/\D/g, '');
+      this.value = v ? '+' + v : '';
+    });
+  </script>
+</body>
+</html>
