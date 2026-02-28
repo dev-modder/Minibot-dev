@@ -11,7 +11,7 @@ const parseList = (envVar, fallback) => {
 
 module.exports = {
   // MongoDB configuration (replaces GitHub)
-  MONGODB_URI: process.env.MONGODB_URI || 'mongodb+srv://ntandomods:H8CPgKSw7GmdNUAj@modsxxx.n82ej6m.mongodb.net/?appName=Modsxxx',
+  MONGODB_URI: process.env.MONGODB_URI || 'mongodb+srv://ntandomods:vHdmLZJTw5lHXmXz@modsxxx.n82ej6m.mongodb.net/?appName=Modsxxx',
   
   // Bot behavior
   AUTO_VIEW_STATUS: process.env.AUTO_VIEW_STATUS || 'false',
