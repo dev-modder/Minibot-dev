@@ -1,0 +1,651 @@
+<![CDATA[<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LADYBUG MINI VPS | PAIR CODE</title>
+  <link rel="icon" href="https://img.icons8.com/fluency/48/ladybug.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+
+  <style>
+    :root {
+      --ladybug-red: #dc2626;
+      --ladybug-dark: #991b1b;
+      --ladybug-light: #ef4444;
+      --deep-black: #0a0a0a;
+      --card-bg: #111111;
+      --accent-gold: #fbbf24;
+      --star-white: #ffffff;
+      --glass-bg: rgba(20, 20, 20, 0.8);
+      --glass-border: rgba(220, 38, 38, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+      color: var(--star-white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated Background */
+    #bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.1) 0%, transparent 50%);
+    }
+
+    .ladybug-icon {
+      position: fixed;
+      font-size: 150px;
+      opacity: 0.1;
+      z-index: 2;
+      animation: floatBug 20s ease-in-out infinite;
+    }
+
+    .bug1 { top: 10%; left: 5%; animation-delay: 0s; }
+    .bug2 { top: 60%; right: 10%; animation-delay: -7s; }
+    .bug3 { bottom: 20%; left: 20%; animation-delay: -14s; }
+
+    @keyframes floatBug {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-30px) rotate(10deg); }
+      50% { transform: translateY(0) rotate(0deg); }
+      75% { transform: translateY(30px) rotate(-10deg); }
+    }
+
+    /* Particles */
+    .particle {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: var(--ladybug-red);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 2;
+      animation: particleFloat 15s infinite linear;
+    }
+
+    @keyframes particleFloat {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      text-decoration: none;
+      color: var(--star-white);
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+    }
+
+    .logo i {
+      color: var(--ladybug-red);
+      font-size: 2rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .nav-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(220, 38, 38, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      border: 1px solid var(--ladybug-red);
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Container */
+    .container {
+      position: relative;
+      z-index: 10;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 120px 20px 40px;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--ladybug-red), var(--accent-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      letter-spacing: 3px;
+      text-shadow: 0 0 30px rgba(220, 38, 38, 0.5);
+    }
+
+    .subtitle {
+      color: #888;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .creator-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--ladybug-red), var(--ladybug-dark));
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+    }
+
+    .creator-badge i {
+      color: var(--accent-gold);
+    }
+
+    /* Main Card */
+    .pair-card {
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 10px 40px rgba(220, 38, 38, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pair-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--ladybug-red), var(--accent-gold), var(--ladybug-red));
+    }
+
+    .card-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--ladybug-light);
+    }
+
+    .card-description {
+      color: #888;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    .input-wrapper {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+      border-radius: 12px;
+      padding: 0 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .input-wrapper:focus-within {
+      border-color: var(--ladybug-red);
+      box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+    }
+
+    .input-wrapper i {
+      color: var(--ladybug-red);
+    }
+
+    .input-wrapper input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 1rem;
+      color: var(--star-white);
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .input-wrapper input::placeholder {
+      color: #555;
+    }
+
+    /* Buttons */
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--ladybug-red), var(--ladybug-dark));
+      color: white;
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(220, 38, 38, 0.6);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--ladybug-light);
+      border: 1px solid var(--ladybug-red);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(220, 38, 38, 0.1);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* WhatsApp Button */
+    .whatsapp-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .whatsapp-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    }
+
+    /* Loading */
+    .loading-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+
+    .loader {
+      display: flex;
+      gap: 5px;
+    }
+
+    .loader div {
+      width: 12px;
+      height: 12px;
+      background: var(--ladybug-red);
+      border-radius: 50%;
+      animation: bounce 1.4s infinite ease-in-out both;
+    }
+
+    .loader div:nth-child(1) { animation-delay: -0.32s; }
+    .loader div:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
+    }
+
+    .loading-text {
+      margin-top: 1rem;
+      color: var(--ladybug-light);
+    }
+
+    /* Result */
+    #pair {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: rgba(220, 38, 38, 0.1);
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+    }
+
+    #pair a {
+      color: var(--accent-gold);
+      text-decoration: none;
+    }
+
+    #pair a:hover {
+      text-decoration: underline;
+    }
+
+    /* Features Grid */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .feature-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(220, 38, 38, 0.2);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .feature-item:hover {
+      border-color: var(--ladybug-red);
+      transform: translateY(-5px);
+    }
+
+    .feature-item i {
+      font-size: 2rem;
+      color: var(--ladybug-red);
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-item span {
+      display: block;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #555;
+      font-size: 0.85rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    footer span {
+      color: var(--ladybug-red);
+      font-weight: 700;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2rem; }
+      .pair-card { padding: 1.5rem; }
+      .ladybug-icon { font-size: 80px; }
+    }
+  </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+
+<body>
+  <div id="bg-animation"></div>
+  
+  <i class="fas fa-bug ladybug-icon bug1"></i>
+  <i class="fas fa-bug ladybug-icon bug2"></i>
+  <i class="fas fa-bug ladybug-icon bug3"></i>
+
+  <header class="navbar">
+    <a href="#" class="logo">
+      <i class="fas fa-bug"></i>
+      LADYBUG MINI
+    </a>
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      <span>VPS ONLINE</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1 class="hero-title">LADYBUG MINI VPS</h1>
+    <p class="subtitle">⚡ Lightning Fast WhatsApp Bot Pairing ⚡</p>
+    
+    <div class="creator-badge">
+      <i class="fas fa-code"></i>
+      Created by Dev Ntando
+    </div>
+
+    <div class="pair-card">
+      <h2 class="card-title"><i class="fas fa-key"></i> GET PAIR CODE</h2>
+      <p class="card-description">Enter your WhatsApp number with country code to receive your pairing code instantly</p>
+
+      <div class="form-group">
+        <label for="phone-number">
+          <i class="fas fa-mobile-alt"></i> Phone Number
+        </label>
+        <div class="input-wrapper">
+          <i class="fas fa-phone"></i>
+          <input type="text" id="phone-number" placeholder="e.g., 263777123456">
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button class="btn btn-primary" id="generate-code">
+          <i class="fas fa-rocket"></i> Generate Pair Code
+        </button>
+        <button class="btn btn-secondary" id="copy-code" style="display:none;">
+          <i class="fas fa-copy"></i> Copy Code
+        </button>
+        <button class="btn btn-secondary" id="validate-code" style="display:none;">
+          <i class="fas fa-check-circle"></i> Validate Session
+        </button>
+      </div>
+
+      <a href="https://whatsapp.com/channel/0029VbANWX1DuMRi1VNPlB0y" target="_blank" class="whatsapp-btn">
+        <i class="fab fa-whatsapp"></i>
+        Join WhatsApp Channel
+      </a>
+
+      <div class="loading-container" id="loading-spinner">
+        <div class="loader">
+          <div></div><div></div><div></div><div></div>
+        </div>
+        <p class="loading-text">Connecting to Ladybug Server...</p>
+      </div>
+
+      <div id="pair"></div>
+    </div>
+
+    <div class="features">
+      <div class="feature-item">
+        <i class="fas fa-bolt"></i>
+        <span>Fast Pairing</span>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-shield-alt"></i>
+        <span>Secure</span>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-cloud"></i>
+        <span>VPS Hosted</span>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-clock"></i>
+        <span>24/7 Uptime</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; <span id="currentYear"></span> LADYBUG MINI VPS. Created by <span>Dev Ntando</span>
+  </footer>
+
+  <script>
+    // Create floating particles
+    function createParticles() {
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        document.body.appendChild(particle);
+      }
+    }
+    createParticles();
+
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    
+    document.addEventListener("DOMContentLoaded", () => {
+      swal({
+        title: "Welcome to Ladybug Mini! 🐞",
+        text: "Fast & Secure WhatsApp Bot Pairing by Dev Ntando",
+        icon: "success",
+        button: "Let's Go!",
+      });
+    });
+
+    const genBtn = document.getElementById('generate-code');
+    const valBtn = document.getElementById('validate-code');
+    const copyBtn = document.getElementById('copy-code');
+    const spinner = document.getElementById('loading-spinner');
+    const pairDiv = document.getElementById('pair');
+    const phoneInput = document.getElementById('phone-number');
+
+    async function copyToClipboard() {
+      const code = copyBtn.dataset.code;
+      try {
+        await navigator.clipboard.writeText(code);
+        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        setTimeout(() => {
+          copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Code';
+        }, 2000);
+      } catch (err) {
+        console.error('Copy failed:', err);
+      }
+    }
+
+    genBtn.addEventListener('click', async () => {
+      const num = phoneInput.value.replace(/\D/g, '');
+      if (!num) {
+        pairDiv.innerHTML = '<p style="color: #ef4444;">❌ Please enter your WhatsApp number with country code.</p>';
+        return;
+      }
+      
+      spinner.style.display = 'flex';
+      pairDiv.innerHTML = '';
+      valBtn.style.display = 'none';
+      copyBtn.style.display = 'none';
+      genBtn.disabled = true;
+      
+      try {
+        phoneInput.value = '+' + num;
+        await new Promise(r => setTimeout(r, 2000));
+        
+        const {data} = await axios.get(`/code?number=${num}`);
+        const code = data.code || '❌ Service Unavailable';
+        const waLink = `https://wa.me/${num}?text=${encodeURIComponent(code)}`;
+        
+        pairDiv.innerHTML = `
+          <p style="margin-bottom: 0.5rem; color: #888;">Your Pairing Code:</p>
+          <p style="font-size: 1.5rem; font-weight: bold; color: #ef4444;">${code}</p>
+          <p style="margin-top: 1rem;">
+            <a href="${waLink}" target="_blank" style="color: #fbbf24;">
+              <i class="fas fa-external-link-alt"></i> Open in WhatsApp
+            </a>
+          </p>
+        `;
+        
+        copyBtn.dataset.code = code;
+        copyBtn.style.display = 'block';
+        valBtn.style.display = 'block';
+      } catch (err) {
+        pairDiv.innerHTML = '<p style="color: #ef4444;">❌ Error generating code. Please try again later.</p>';
+      } finally {
+        spinner.style.display = 'none';
+        genBtn.disabled = false;
+      }
+    });
+
+    copyBtn.addEventListener('click', copyToClipboard);
+    valBtn.addEventListener('click', () => window.location.href = '/validate');
+    
+    phoneInput.addEventListener('input', function() {
+      let v = this.value.replace(/\D/g, '');
+      this.value = v ? '+' + v : '';
+    });
+  </script>
+</body>
+</html>
+]]>
